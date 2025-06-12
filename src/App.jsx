@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import DetailsRender from './DetailsRender.jsx';
+import TableGuests from './TableGuests.jsx'
 
 export default function App() {
   const [currentGuest, setCurrentGuest] = useState({});
@@ -16,24 +18,12 @@ export default function App() {
   return (
     <>
       <h1>Guest List</h1>
-      {(!currentGuest.name) ?
-        <ul>
-          {
-            wholeData.map((elem) => (
-              <li key={elem.name} onClick={() => setCurrentGuest(elem)}>NAME: {elem.name} EMAIL: {elem.email}</li>
-            ))
-          }
-          <p>Select a guest to see more details.</p>
-        </ul>
-        :
-        <ul>
-          <li key={currentGuest.name}>NAME: {currentGuest.name}</li>
-          <li key={currentGuest.email}>EMAIL: {currentGuest.email}</li>
-          <li key={currentGuest.phone}>PHONE: {currentGuest.phone}</li>
-          <li key={currentGuest.bio}>BIO: {currentGuest.bio}</li>
-          <li key={currentGuest.job}>JOB: {currentGuest.job}</li>
-          <button onClick={() => setCurrentGuest({})}>Back</button>
-        </ul>
+      {
+        (!currentGuest.name)
+          ?
+          <TableGuests wholeData={wholeData} setCurrentGuest={setCurrentGuest} />
+          :
+          <DetailsRender currentGuest={currentGuest} setCurrentGuest={setCurrentGuest} />
       }
     </>
   )
